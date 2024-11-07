@@ -23,10 +23,12 @@ export class UsersService {
 
   private getUserByIdWithPassword(id: string): User | undefined {
     if (!isUUID(id)) {
-      throw new BadRequestException('some-invalid-id');
+      throw new BadRequestException(
+        'Bad request. userId is invalid (not uuid)',
+      );
     }
 
-    const user = this.database.usersService
+    const user = this.database.usersDatabaseService
       .getAll()
       .find((user) => user.id === id);
 
@@ -37,7 +39,7 @@ export class UsersService {
   }
 
   findAll() {
-    return this.database.usersService
+    return this.database.usersDatabaseService
       .getAll()
       .map((user) => this.hidePassword(user));
   }
@@ -58,7 +60,7 @@ export class UsersService {
       createdAt: Date.now(),
       updatedAt: Date.now(),
     };
-    return this.hidePassword(this.database.usersService.create(user));
+    return this.hidePassword(this.database.usersDatabaseService.create(user));
   }
 
   updatePassword(
@@ -73,7 +75,7 @@ export class UsersService {
       throw new ForbiddenException('Old password is incorrect');
     }
 
-    const updatedUser = this.database.usersService.update(id, {
+    const updatedUser = this.database.usersDatabaseService.update(id, {
       password: newPassword,
       updatedAt: Date.now(),
       version: currentUser.version + 1,
@@ -88,7 +90,7 @@ export class UsersService {
 
   delete(id: string): responsUser {
     const user = this.getUserByIdWithPassword(id);
-    this.database.usersService.delete(id);
+    this.database.usersDatabaseService.delete(id);
     return this.hidePassword(user);
   }
 }
