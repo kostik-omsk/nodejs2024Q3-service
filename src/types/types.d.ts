@@ -9,3 +9,9 @@ export interface responsUser {
 export interface User extends responsUser {
   password: string;
 }
+
+export interface Artist {
+  id: string; // uuid v4
+  name: string;
+  grammy: boolean;
+}
