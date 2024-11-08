@@ -40,7 +40,12 @@ export class TrackService {
 
   update(id: string, updateTrackDto: UpdateTrackDto) {
     this.findOne(id);
-    return this.db.trackDatabaseService.update(id, updateTrackDto);
+
+    const updatedTrack = this.db.trackDatabaseService.update(
+      id,
+      updateTrackDto,
+    );
+    return { id, ...updatedTrack };
   }
 
   remove(id: string) {

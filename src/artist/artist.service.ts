@@ -39,7 +39,11 @@ export class ArtistService {
 
   update(id: string, updateArtistDto: UpdateArtistDto) {
     this.findOne(id);
-    return this.database.artistDatabaseService.update(id, updateArtistDto);
+    const updateArtist = this.database.artistDatabaseService.update(
+      id,
+      updateArtistDto,
+    );
+    return { id, ...updateArtist };
   }
 
   remove(id: string) {
