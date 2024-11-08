@@ -3,8 +3,9 @@ import { DataBaseModule } from './database/database.module';
 import { UserModule } from './user/user.module';
 import { ArtistModule } from './artist/artist.module';
 import { TrackModule } from './track/track.module';
+import { AlbumModule } from './album/album.module';
 
 @Module({
-  imports: [DataBaseModule, UserModule, ArtistModule, TrackModule],
+  imports: [DataBaseModule, UserModule, ArtistModule, TrackModule, AlbumModule],
 })
 export class AppModule {}
