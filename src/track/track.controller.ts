@@ -6,20 +6,20 @@ import {
   Param,
   Delete,
   UsePipes,
-  ValidationPipe,
   Put,
   HttpCode,
 } from '@nestjs/common';
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
+import { validationPipe } from 'src/pipes/validation.pipe';
 
 @Controller('track')
 export class TrackController {
   constructor(private readonly trackService: TrackService) {}
 
   @Post()
-  @UsePipes(new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }))
+  @UsePipes(validationPipe)
   create(@Body() createTrackDto: CreateTrackDto) {
     return this.trackService.create(createTrackDto);
   }
@@ -35,6 +35,7 @@ export class TrackController {
   }
 
   @Put(':id')
+  @UsePipes(validationPipe)
   update(@Param('id') id: string, @Body() updateTrackDto: UpdateTrackDto) {
     return this.trackService.update(id, updateTrackDto);
   }
