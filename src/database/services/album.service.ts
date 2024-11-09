@@ -1,10 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UpdateAlbumDto } from 'src/album/dto/update-album.dto';
 import { Album } from 'src/types/types';
+import { TrackDatabaseService } from './track.service';
 
 @Injectable()
 export class AlbumDatabaseService {
   private albums: Album[] = [];
+
+  constructor(
+    @Inject(forwardRef(() => TrackDatabaseService))
+    public readonly trackDatabaseService: TrackDatabaseService,
+  ) {}
 
   findAll(): Album[] {
     return this.albums;
@@ -28,5 +34,11 @@ export class AlbumDatabaseService {
 
   remove(id: string) {
     this.albums = this.albums.filter((album) => album.id !== id);
+    const tracks = this.trackDatabaseService.findAll();
+    tracks.forEach((track) => {
+      if (track.albumId === id) {
+        this.trackDatabaseService.update(track.id, { albumId: null });
+      }
+    });
   }
 }
