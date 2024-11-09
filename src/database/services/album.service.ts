@@ -2,6 +2,7 @@ import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UpdateAlbumDto } from 'src/album/dto/update-album.dto';
 import { Album } from 'src/types/types';
 import { TrackDatabaseService } from './track.service';
+import { FavoritesDatabaseService } from './favorites.service';
 
 @Injectable()
 export class AlbumDatabaseService {
@@ -10,6 +11,8 @@ export class AlbumDatabaseService {
   constructor(
     @Inject(forwardRef(() => TrackDatabaseService))
     public readonly trackDatabaseService: TrackDatabaseService,
+    @Inject(forwardRef(() => FavoritesDatabaseService))
+    public readonly favoritesDatabaseService: FavoritesDatabaseService,
   ) {}
 
   findAll(): Album[] {
@@ -40,5 +43,7 @@ export class AlbumDatabaseService {
         this.trackDatabaseService.update(track.id, { albumId: null });
       }
     });
+
+    this.favoritesDatabaseService.removeAlbum(id);
   }
 }

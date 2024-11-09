@@ -1,11 +1,16 @@
-import { Injectable } from '@nestjs/common';
+import { forwardRef, Inject, Injectable } from '@nestjs/common';
 import { UpdateTrackDto } from 'src/track/dto/update-track.dto';
 import { Track } from 'src/types/types';
+import { FavoritesDatabaseService } from './favorites.service';
 
 @Injectable()
 export class TrackDatabaseService {
   private tracks: Track[] = [];
 
+  constructor(
+    @Inject(forwardRef(() => FavoritesDatabaseService))
+    public readonly favoritesDatabaseService: FavoritesDatabaseService,
+  ) {}
   findAll(): Track[] {
     return this.tracks;
   }
@@ -28,5 +33,6 @@ export class TrackDatabaseService {
 
   remove(id: string) {
     this.tracks = this.tracks.filter((track) => track.id !== id);
+    this.favoritesDatabaseService.removeTrack(id);
   }
 }

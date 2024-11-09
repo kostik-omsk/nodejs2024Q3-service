@@ -3,6 +3,7 @@ import { UpdateArtistDto } from 'src/artist/dto/update-artist.dto';
 import { Artist } from 'src/types/types';
 import { TrackDatabaseService } from './track.service';
 import { AlbumDatabaseService } from './album.service';
+import { FavoritesDatabaseService } from './favorites.service';
 
 @Injectable()
 export class ArtistDatabaseService {
@@ -14,6 +15,9 @@ export class ArtistDatabaseService {
 
     @Inject(forwardRef(() => AlbumDatabaseService))
     public readonly albumDatabaseService: AlbumDatabaseService,
+
+    @Inject(forwardRef(() => FavoritesDatabaseService))
+    public readonly favoritesDatabaseService: FavoritesDatabaseService,
   ) {}
 
   findAll() {
@@ -50,5 +54,7 @@ export class ArtistDatabaseService {
         this.albumDatabaseService.update(album.id, { artistId: null });
       }
     });
+
+    this.favoritesDatabaseService.removeArtist(id);
   }
 }

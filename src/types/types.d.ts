@@ -30,3 +30,8 @@ export interface Album {
   year: number;
   artistId: string | null; // refers to Artist
 }
+export interface Favorites {
+  artists: Artist[]; // favorite artists ids
+  albums: Album[]; // favorite albums ids
+  tracks: Track[]; // favorite tracks ids
+}
