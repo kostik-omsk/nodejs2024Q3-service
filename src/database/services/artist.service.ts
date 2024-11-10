@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { UpdateArtistDto } from 'src/artist/dto/update-artist.dto';
+import { UpdateArtistDto } from 'src/modules/artist/dto/update-artist.dto';
 import { Artist } from 'src/types/types';
 import { TrackDatabaseService } from './track.service';
 import { AlbumDatabaseService } from './album.service';

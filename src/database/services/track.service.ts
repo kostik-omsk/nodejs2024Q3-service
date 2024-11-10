@@ -1,5 +1,5 @@
 import { forwardRef, Inject, Injectable } from '@nestjs/common';
-import { UpdateTrackDto } from 'src/track/dto/update-track.dto';
+import { UpdateTrackDto } from 'src/modules/track/dto/update-track.dto';
 import { Track } from 'src/types/types';
 import { FavoritesDatabaseService } from './favorites.service';
 

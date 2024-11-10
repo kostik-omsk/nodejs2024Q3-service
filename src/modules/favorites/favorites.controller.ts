@@ -20,8 +20,6 @@ export class FavoritesController {
 
   @Post('artist/:id')
   addArtist(@Param('id') id: string) {
-    console.log(id);
-
     return this.favoritesService.addArtist(id);
   }
 
