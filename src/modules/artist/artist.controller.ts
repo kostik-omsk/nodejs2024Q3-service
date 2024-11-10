@@ -12,7 +12,7 @@ import {
 import { ArtistService } from './artist.service';
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
-import { validationPipe } from 'src/pipes/validation.pipe';
+import { validationPipe } from '../../pipes/validation.pipe';
 
 @Controller('artist')
 export class ArtistController {

@@ -12,7 +12,7 @@ import {
 import { UsersService } from './users.service';
 import CreateUserDto from './dto/create.dto';
 import UpdateUserPasswordDto from './dto/updateUser.dto';
-import { validationPipe } from 'src/pipes/validation.pipe';
+import { validationPipe } from '../../pipes/validation.pipe';
 
 @Controller('user')
 export class UserController {

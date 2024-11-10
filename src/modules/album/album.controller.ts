@@ -12,7 +12,7 @@ import {
 import { AlbumService } from './album.service';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
-import { validationPipe } from 'src/pipes/validation.pipe';
+import { validationPipe } from '../../pipes/validation.pipe';
 
 @Controller('album')
 export class AlbumController {

@@ -5,7 +5,7 @@ import {
 } from '@nestjs/common';
 import { CreateAlbumDto } from './dto/create-album.dto';
 import { UpdateAlbumDto } from './dto/update-album.dto';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../../database/database.service';
 import { v4 as uuidv4 } from 'uuid';
 import { isUUID } from 'class-validator';
 @Injectable()

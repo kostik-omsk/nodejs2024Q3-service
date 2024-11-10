@@ -6,7 +6,7 @@ import {
 import { CreateArtistDto } from './dto/create-artist.dto';
 import { UpdateArtistDto } from './dto/update-artist.dto';
 import { v4 as uuidv4 } from 'uuid';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../../database/database.service';
 import { isUUID } from 'class-validator';
 @Injectable()
 export class ArtistService {

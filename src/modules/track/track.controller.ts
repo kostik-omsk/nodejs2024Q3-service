@@ -12,7 +12,7 @@ import {
 import { TrackService } from './track.service';
 import { CreateTrackDto } from './dto/create-track.dto';
 import { UpdateTrackDto } from './dto/update-track.dto';
-import { validationPipe } from 'src/pipes/validation.pipe';
+import { validationPipe } from '../../pipes/validation.pipe';
 
 @Controller('track')
 export class TrackController {

@@ -4,7 +4,7 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
-import { DatabaseService } from 'src/database/database.service';
+import { DatabaseService } from '../../database/database.service';
 import CreateUserDto from './dto/create.dto';
 import UpdateUserPasswordDto from './dto/updateUser.dto';
 import { responsUser, User } from 'src/types/types';
