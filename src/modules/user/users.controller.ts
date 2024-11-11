@@ -12,125 +12,42 @@ import {
 import { UsersService } from './users.service';
 import CreateUserDto from './dto/create-user.dto';
 import UpdateUserPasswordDto from './dto/update-user.dto';
-import { validationPipe } from '../../pipes/validation.pipe';
+import { validationPipe } from '../../common/pipes/validation.pipe';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import ResponseUserDto from './dto/response-user.dto';
 import {
-  ApiBody,
-  ApiOperation,
-  ApiParam,
-  ApiResponse,
-  ApiTags,
-} from '@nestjs/swagger';
-import ResponseUserDto from './dto/respons-user.dto';
+  ApiCreate,
+  ApiDelete,
+  ApiGet,
+  ApiGetById,
+  ApiUpdate,
+} from '../../common/decorators/docApi.decorators';
 @ApiTags('Users')
 @Controller('user')
 export class UserController {
   constructor(private readonly userService: UsersService) {}
+  @Post()
+  @ApiCreate('user', CreateUserDto, ResponseUserDto)
+  @UsePipes(validationPipe)
+  create(@Body() createUserDto: CreateUserDto) {
+    return this.userService.create(createUserDto);
+  }
 
-  @ApiOperation({ summary: 'Get a list of all users' })
-  @ApiResponse({
-    status: 200,
-    description: 'List of all users',
-    type: [ResponseUserDto],
-    example: [
-      {
-        id: '123e4567-e89b-12d3-a456-426614174000',
-        login: 'Vasia',
-        version: 1,
-        createdAt: 1672531199000,
-        updatedAt: 1672531299000,
-      },
-    ],
-  })
+  @ApiGet('users', ResponseUserDto)
   @Get()
   findAll() {
     return this.userService.findAll();
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Get a user by ID' })
-  @ApiParam({
-    name: 'id',
-    description: 'UUID user',
-    format: 'uuid',
-    example: '123e4567-e89b-12d3-a456-426614174000',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'The user has been found',
-    type: ResponseUserDto,
-    example: {
-      id: '123e4567-e89b-12d3-a456-426614174000',
-      login: 'Vasia',
-      version: 1,
-      createdAt: 1672531199000,
-      updatedAt: 1672531299000,
-    },
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Validation Error',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'The user was not found',
-  })
+  @ApiGetById('user')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(id);
   }
 
-  @Post()
-  @ApiOperation({ summary: 'Create a new user' })
-  @ApiBody({ type: CreateUserDto })
-  @ApiResponse({
-    status: 201,
-    description: 'The user has been successfully created',
-    type: ResponseUserDto,
-    example: {
-      id: '123e4567-e89b-12d3-a456-426614174000',
-      login: 'Vasia',
-      version: 1,
-      createdAt: 1672531199000,
-      updatedAt: 1672531299000,
-    },
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Validation Error',
-  })
-  @UsePipes(validationPipe)
-  create(@Body() createUserDto: CreateUserDto) {
-    return this.userService.create(createUserDto);
-  }
-
   @Put(':id')
-  @ApiOperation({ summary: "Update the user's password" })
-  @ApiParam({
-    name: 'id',
-    description: 'UUID user',
-    format: 'uuid',
-    example: '123e4567-e89b-12d3-a456-426614174000',
-  })
-  @ApiBody({ type: UpdateUserPasswordDto })
-  @ApiResponse({
-    status: 200,
-    description: "The user's password has been successfully updated",
-    type: ResponseUserDto,
-    example: {
-      id: '123e4567-e89b-12d3-a456-426614174000',
-      login: 'Vasia',
-      version: 1,
-      createdAt: 1672531199000,
-      updatedAt: 1672531299000,
-    },
-  })
-  @ApiResponse({
-    status: 400,
-    description: 'Validation error',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'The user was not found',
-  })
+  @ApiUpdate('user', UpdateUserPasswordDto, ResponseUserDto)
+  @ApiResponse({ status: 403, description: 'old Password is wrong' })
   @UsePipes(validationPipe)
   update(
     @Param('id') id: string,
@@ -140,21 +57,7 @@ export class UserController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Delete a user by ID' })
-  @ApiParam({
-    name: 'id',
-    description: 'UUID user',
-    format: 'uuid',
-    example: '123e4567-e89b-12d3-a456-426614174000',
-  })
-  @ApiResponse({
-    status: 204,
-    description: 'The user has been successfully deleted',
-  })
-  @ApiResponse({
-    status: 404,
-    description: 'The user was not found',
-  })
+  @ApiDelete('user')
   @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.userService.delete(id);
